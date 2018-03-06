@@ -1,6 +1,5 @@
 #include <TrinketKeyboard.h>
 
-// const int SHIFT_SWITCH = 4;
 const int CTRL_SWITCH = 0;
 const int ALT_SWITCH = 2;  // skip using pin 1 because it's mapped to the reset LED
 
@@ -8,8 +7,6 @@ void setup()
 {
     // Set button pin as input with an internal pullup resistor
     // The button is active-low, they read LOW when they are not pressed
-
-    // pinMode(SHIFT_SWITCH, INPUT_PULLUP);
     pinMode(CTRL_SWITCH, INPUT_PULLUP);
     pinMode(ALT_SWITCH, INPUT_PULLUP);
  
@@ -22,17 +19,16 @@ void loop()
     // the poll function must be called at least once every 10 ms
     // or the computer may think that the device
     // has stopped working, and give driver errors
-  
-    // todo: check and see if it will just work with the MOD_LEFT_CONTROL, with a 0 in the second arg
+
     if(digitalRead(CTRL_SWITCH) == LOW || digitalRead(ALT_SWITCH) == LOW)
     {
-        if(digitalRead(CTRL_SWITCH) == LOW)
+        if(digitalRead(CTRL_SWITCH) == LOW) //pin 0
         {
-            TrinketKeyboard.pressKey(KEYCODE_MOD_LEFT_CONTROL, KEYCODE_LEFT_CONTROL);
+            TrinketKeyboard.pressKey(KEYCODE_MOD_LEFT_CONTROL, 0);
         }
-        if(digitalRead(ALT_SWITCH) == LOW)
+        if(digitalRead(ALT_SWITCH) == LOW) // pin 2
         {
-            TrinketKeyboard.pressKey(KEYCODE_MOD_LEFT_ALT, KEYCODE_LEFT_ALT);
+            TrinketKeyboard.pressKey(KEYCODE_MOD_LEFT_ALT, 0);
         }
     }
     else
@@ -41,10 +37,7 @@ void loop()
     }
 
     // for testing
-    /*if(digitalRead(SHIFT_SWITCH) == LOW)
-    {
-        TrinketKeyboard.print("SHIFT");
-    }
+    /*
     if(digitalRead(CTRL_SWITCH) == LOW)
     {
         TrinketKeyboard.print("CTRL");
